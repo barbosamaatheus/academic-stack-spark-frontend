@@ -72,17 +72,17 @@ export interface Vote {
 // Serviços de Autenticação
 export const authService = {
   login: async (email: string, password: string) => {
-    const response = await api.post('/auth/login', { email, password });
+    const response = await api.post('/login', { email, senha: password });
     return response.data;
   },
 
   register: async (username: string, email: string, password: string) => {
-    const response = await api.post('/auth/register', { username, email, password });
+    const response = await api.post('/register', { username, email, password });
     return response.data;
   },
 
   getCurrentUser: async (): Promise<User> => {
-    const response = await api.get('/auth/me');
+    const response = await api.get('/me');
     return response.data;
   },
 };

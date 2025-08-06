@@ -69,6 +69,7 @@ Este projeto foi construído com:
 ## Funcionalidades
 
 ### ✅ Implementadas
+
 - 🏠 **Página inicial** com listagem de perguntas
 - 🔐 **Sistema de autenticação** (login/logout/cadastro)
 - ➕ **Criar pergunta** (usuários autenticados)
@@ -78,6 +79,7 @@ Este projeto foi construído com:
 - 🎨 **Interface inspirada no Stack Overflow**
 
 ### 🚧 Em desenvolvimento
+
 - 📝 **Página de pergunta individual** com respostas
 - 💬 **Sistema de comentários**
 - 👤 **Página de perfil do usuário**
@@ -87,29 +89,34 @@ Este projeto foi construído com:
 ## Configuração do Ambiente
 
 ### Pré-requisitos
+
 - Node.js 18+ e npm
 - Backend Java/Javalin rodando na porta 8080
 
 ### Instalação
 
 1. **Clone o repositório**
+
 ```bash
 git clone <URL_DO_REPOSITORIO>
 cd academic-stack-frontend
 ```
 
 2. **Instale as dependências**
+
 ```bash
 npm install
 ```
 
 3. **Configure as variáveis de ambiente**
+
 ```bash
 cp .env.example .env
 # Edite o arquivo .env conforme necessário
 ```
 
 4. **Execute o projeto**
+
 ```bash
 npm run dev
 ```
@@ -144,29 +151,33 @@ src/
 O frontend se comunica com os seguintes endpoints do backend:
 
 ### Autenticação
-- `POST /api/auth/login` - Login do usuário
-- `POST /api/auth/register` - Cadastro de usuário
-- `GET /api/auth/me` - Dados do usuário atual
+
+- `POST /login` - Login do usuário
+- `POST /cadastrar` - Cadastro de usuário
+- `GET /me` - Dados do usuário atual
 
 ### Perguntas
-- `GET /api/questions` - Listar todas as perguntas
-- `GET /api/questions/{id}` - Obter pergunta específica
-- `POST /api/questions` - Criar nova pergunta
-- `PUT /api/questions/{id}` - Editar pergunta
-- `DELETE /api/questions/{id}` - Deletar pergunta
+
+- `GET /perguntas` - Listar todas as perguntas
+- `GET /perguntas/{id}` - Obter pergunta específica
+- `POST /perguntas` - Criar nova pergunta
+- `PUT /perguntas/{id}` - Editar pergunta
+- `DELETE /perguntas/{id}` - Deletar pergunta
 
 ### Respostas
-- `GET /api/questions/{id}/answers` - Listar respostas de uma pergunta
-- `POST /api/questions/{id}/answers` - Criar resposta
-- `PUT /api/answers/{id}` - Editar resposta
-- `DELETE /api/answers/{id}` - Deletar resposta
-- `PUT /api/answers/{id}/accept` - Aceitar resposta
+
+- `GET /perguntas/{id}/answers` - Listar respostas de uma pergunta
+- `POST /perguntas/{id}/respostas` - Criar resposta
+- `PUT /perguntas/{id}` - Editar resposta
+- `DELETE /perguntas/{id}` - Deletar resposta
+- `PUT /perguntas/{id}/respostas` - Aceitar resposta
 
 ### Votos
-- `POST /api/questions/{id}/vote` - Votar em pergunta
-- `POST /api/answers/{id}/vote` - Votar em resposta
-- `DELETE /api/questions/{id}/vote` - Remover voto da pergunta
-- `DELETE /api/answers/{id}/vote` - Remover voto da resposta
+
+- `POST /perguntas/{id}/vote` - Votar em pergunta
+- `POST /perguntas/{id}/vote` - Votar em resposta
+- `DELETE /perguntas/{id}/vote` - Remover voto da pergunta
+- `DELETE /perguntas/{id}/vote` - Remover voto da resposta
 
 ## Scripts Disponíveis
 
