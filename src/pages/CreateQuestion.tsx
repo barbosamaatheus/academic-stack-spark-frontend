@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { questionService } from '@/services/api';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
-import { Plus, ArrowLeft } from 'lucide-react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { questionService } from "@/services/api";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+import { Plus, ArrowLeft } from "lucide-react";
 
 const CreateQuestion: React.FC = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [tags, setTags] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [tags, setTags] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -22,13 +22,13 @@ const CreateQuestion: React.FC = () => {
   // Redirect if not authenticated
   React.useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!title.trim() || !content.trim()) {
       toast({
         title: "Campos obrigatórios",
@@ -59,21 +59,25 @@ const CreateQuestion: React.FC = () => {
     setIsLoading(true);
     try {
       const questionData = {
-        title: title.trim(),
-        content: content.trim(),
-        tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0),
+        titulo: title.trim(),
+        conteudo: content.trim(),
+        tags: tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag.length > 0),
       };
 
       const newQuestion = await questionService.create(questionData);
-      
+
       toast({
         title: "Pergunta criada com sucesso!",
-        description: "Sua pergunta foi publicada e já está disponível para a comunidade.",
+        description:
+          "Sua pergunta foi publicada e já está disponível para a comunidade.",
       });
-      
+
       navigate(`/questions/${newQuestion.id}`);
     } catch (error) {
-      console.error('Erro ao criar pergunta:', error);
+      console.error("Erro ao criar pergunta:", error);
       toast({
         title: "Erro ao criar pergunta",
         description: "Não foi possível publicar sua pergunta. Tente novamente.",
@@ -93,11 +97,7 @@ const CreateQuestion: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="flex items-center mb-8">
-          <Button
-            variant="ghost"
-            onClick={() => navigate(-1)}
-            className="mr-4"
-          >
+          <Button variant="ghost" onClick={() => navigate(-1)} className="mr-4">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Voltar
           </Button>
@@ -119,9 +119,7 @@ const CreateQuestion: React.FC = () => {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="title">
-                  Título da pergunta *
-                </Label>
+                <Label htmlFor="title">Título da pergunta *</Label>
                 <Input
                   id="title"
                   type="text"
@@ -137,9 +135,7 @@ const CreateQuestion: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="content">
-                  Conteúdo da pergunta *
-                </Label>
+                <Label htmlFor="content">Conteúdo da pergunta *</Label>
                 <Textarea
                   id="content"
                   placeholder="Descreva sua pergunta em detalhes. Inclua código, mensagens de erro, ou o que já tentou fazer..."
@@ -150,14 +146,13 @@ const CreateQuestion: React.FC = () => {
                   required
                 />
                 <p className="text-sm text-muted-foreground">
-                  Inclua todos os detalhes relevantes para que outros possam ajudar
+                  Inclua todos os detalhes relevantes para que outros possam
+                  ajudar
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="tags">
-                  Tags (opcional)
-                </Label>
+                <Label htmlFor="tags">Tags (opcional)</Label>
                 <Input
                   id="tags"
                   type="text"
@@ -178,12 +173,12 @@ const CreateQuestion: React.FC = () => {
                 >
                   Cancelar
                 </Button>
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="bg-primary hover:bg-primary-hover text-primary-foreground"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Publicando...' : 'Publicar Pergunta'}
+                  {isLoading ? "Publicando..." : "Publicar Pergunta"}
                 </Button>
               </div>
             </form>
@@ -193,7 +188,9 @@ const CreateQuestion: React.FC = () => {
         {/* Guidelines */}
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle className="text-lg">Dicas para uma boa pergunta</CardTitle>
+            <CardTitle className="text-lg">
+              Dicas para uma boa pergunta
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="list-disc list-inside space-y-2 text-sm text-muted-foreground">

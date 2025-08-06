@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
-import { LogIn } from 'lucide-react';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+import { LogIn } from "lucide-react";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -19,13 +25,13 @@ const Login: React.FC = () => {
   // Redirect if already authenticated
   React.useEffect(() => {
     if (isAuthenticated) {
-      navigate('/');
+      navigate("/");
     }
   }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       toast({
         title: "Campos obrigatórios",
@@ -38,13 +44,13 @@ const Login: React.FC = () => {
     setIsLoading(true);
     try {
       const success = await login(email, password);
-      
+
       if (success) {
         toast({
           title: "Login realizado com sucesso!",
           description: "Bem-vindo de volta ao Academic Stack.",
         });
-        navigate('/');
+        navigate("/");
       } else {
         toast({
           title: "Erro no login",
@@ -99,28 +105,28 @@ const Login: React.FC = () => {
                 required
               />
             </div>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-primary hover:bg-primary-hover text-primary-foreground"
               disabled={isLoading}
             >
-              {isLoading ? 'Entrando...' : 'Entrar'}
+              {isLoading ? "Entrando..." : "Entrar"}
             </Button>
           </form>
-          
+
           <div className="mt-6 text-center text-sm">
             <span className="text-muted-foreground">Não tem uma conta? </span>
-            <Link 
-              to="/register" 
+            <Link
+              to="/register"
               className="text-primary hover:underline font-medium"
             >
               Cadastre-se
             </Link>
           </div>
-          
+
           <div className="mt-4 text-center">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="text-sm text-muted-foreground hover:text-foreground"
             >
               ← Voltar para o início

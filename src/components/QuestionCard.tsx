@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Question } from '@/services/api';
-import { ArrowUp, ArrowDown, MessageSquare, Check } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Question } from "@/services/api";
+import { ArrowUp, ArrowDown, MessageSquare, Check } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 interface QuestionCardProps {
   question: Question;
@@ -29,41 +29,40 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question }) => {
             <span className="font-semibold text-lg">{question.votes}</span>
             <ArrowDown className="w-5 h-5 text-muted-foreground" />
           </div>
-          
-          <div className={`px-2 py-1 rounded text-sm font-medium ${
-            question.answered 
-              ? 'bg-question-answered text-upvote border border-upvote/30' 
-              : 'bg-question-unanswered text-muted-foreground border'
-          }`}>
-            {question.answerCount} {question.answerCount === 1 ? 'resposta' : 'respostas'}
+
+          <div
+            className={`px-2 py-1 rounded text-sm font-medium ${
+              question.answered
+                ? "bg-question-answered text-upvote border border-upvote/30"
+                : "bg-question-unanswered text-muted-foreground border"
+            }`}
+          >
+            {question.answerCount}{" "}
+            {question.answerCount === 1 ? "resposta" : "respostas"}
           </div>
         </div>
 
         {/* Question Content */}
         <div className="flex-1 min-w-0">
-          <Link 
-            to={`/questions/${question.id}`}
-            className="block group"
-          >
+          <Link to={`/questions/${question.id}`} className="block group">
             <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
-              {question.title}
+              {question.titulo}
             </h3>
           </Link>
 
           <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
-            {question.content.length > 150 
-              ? `${question.content.substring(0, 150)}...` 
-              : question.content
-            }
+            {question.conteudo.length > 150
+              ? `${question.conteudo.substring(0, 150)}...`
+              : question.conteudo}
           </p>
 
           {/* Tags */}
           {question.tags && question.tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mb-3">
               {question.tags.map((tag, index) => (
-                <Badge 
-                  key={index} 
-                  variant="secondary" 
+                <Badge
+                  key={index}
+                  variant="secondary"
                   className="text-xs bg-primary/10 text-primary hover:bg-primary/20"
                 >
                   {tag}
@@ -76,15 +75,17 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question }) => {
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <div className="flex items-center space-x-1">
               <span>por</span>
-              <Link 
-                to={`/users/${question.author.id}`}
+              <Link
+                to={`/users/${question.autor.id}`}
                 className="text-primary hover:underline font-medium"
               >
-                {question.author.username}
+                {question.autor.nome}
               </Link>
-              <span className="text-badge-gold">({question.author.reputation})</span>
+              <span className="text-badge-gold">
+                ({question.autor?.reputation})
+              </span>
             </div>
-            <span>{formatDate(question.createdAt)}</span>
+            <span>{formatDate(question.dataCriacao)}</span>
           </div>
         </div>
 

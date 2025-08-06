@@ -5,7 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { authService } from "@/services/api";
+import api, { authService } from "@/services/api";
 
 interface User {
   id: number;
@@ -49,12 +49,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     // Verificar se há token armazenado e validar
     const token = localStorage.getItem("token");
-    if (token) {
-      authService
+    const user = localStorage.getItem("user");
+    const parsedUser = user ? JSON.parse(user) : null;
+    if (token && parsedUser) {
+      setUser(parsedUser);
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      /* authService
         .getCurrentUser()
         .then((userData) => setUser(userData))
         .catch(() => localStorage.removeItem("token"))
-        .finally(() => setIsLoading(false));
+        .finally(() => setIsLoading(false)); */
     } else {
       setIsLoading(false);
     }
@@ -64,6 +68,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const response = await authService.login(email, password);
       localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+      api.defaults.headers.common["Authorization"] = `Bearer ${response.token}`;
       setUser(response.user);
       return true;
     } catch (error) {

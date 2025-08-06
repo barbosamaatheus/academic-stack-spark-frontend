@@ -22,22 +22,22 @@ api.interceptors.request.use((config) => {
 // Tipos de dados
 export interface User {
   id: number;
-  username: string;
+  nome: string;
   email: string;
-  reputation: number;
+  reputation?: number;
   createdAt: string;
 }
 
 export interface Question {
   id: number;
-  title: string;
-  content: string;
-  author: User;
-  votes: number;
+  titulo: string;
+  conteudo: string;
+  autor: User;
+  votos: number;
   answered: boolean;
   answerCount: number;
-  createdAt: string;
-  updatedAt: string;
+  dataCriacao: string;
+  respostas?: Answer[];
   tags: string[];
 }
 
@@ -90,31 +90,32 @@ export const authService = {
 // Serviços de Perguntas
 export const questionService = {
   getAll: async (): Promise<Question[]> => {
-    const response = await api.get('/questions');
+    const response = await api.get('/perguntas');
     return response.data;
   },
 
   getById: async (id: number): Promise<Question> => {
-    const response = await api.get(`/questions/${id}`);
+    const response = await api.get(`/perguntas/${id}`);
     return response.data;
   },
 
   create: async (questionData: Partial<Question>): Promise<Question> => {
-    const response = await api.post('/questions', questionData);
+    console.log(questionData);
+    const response = await api.post('/perguntas', questionData);
     return response.data;
   },
 
   update: async (id: number, questionData: Partial<Question>): Promise<Question> => {
-    const response = await api.put(`/questions/${id}`, questionData);
+    const response = await api.put(`/perguntas/${id}`, questionData);
     return response.data;
   },
 
   delete: async (id: number): Promise<void> => {
-    await api.delete(`/questions/${id}`);
+    await api.delete(`/perguntas/${id}`);
   },
 
   getByUser: async (userId: number): Promise<Question[]> => {
-    const response = await api.get(`/users/${userId}/questions`);
+    const response = await api.get(`/users/${userId}/perguntas`);
     return response.data;
   },
 };
@@ -122,31 +123,31 @@ export const questionService = {
 // Serviços de Respostas
 export const answerService = {
   getByQuestion: async (questionId: number): Promise<Answer[]> => {
-    const response = await api.get(`/questions/${questionId}/answers`);
+    const response = await api.get(`/perguntas/${questionId}/respostas`);
     return response.data;
   },
 
   create: async (questionId: number, content: string): Promise<Answer> => {
-    const response = await api.post(`/questions/${questionId}/answers`, { content });
+    const response = await api.post(`/perguntas/${questionId}/respostas`, { content });
     return response.data;
   },
 
   update: async (id: number, content: string): Promise<Answer> => {
-    const response = await api.put(`/answers/${id}`, { content });
+    const response = await api.put(`/respostas/${id}`, { content });
     return response.data;
   },
 
   delete: async (id: number): Promise<void> => {
-    await api.delete(`/answers/${id}`);
+    await api.delete(`/respostas/${id}`);
   },
 
   markAsAccepted: async (id: number): Promise<Answer> => {
-    const response = await api.put(`/answers/${id}/accept`);
+    const response = await api.put(`/respostas/${id}/accept`);
     return response.data;
   },
 
   getByUser: async (userId: number): Promise<Answer[]> => {
-    const response = await api.get(`/users/${userId}/answers`);
+    const response = await api.get(`/users/${userId}/respostas`);
     return response.data;
   },
 };
@@ -154,18 +155,18 @@ export const answerService = {
 // Serviços de Votos
 export const voteService = {
   voteQuestion: async (questionId: number, type: 'upvote' | 'downvote'): Promise<void> => {
-    await api.post(`/questions/${questionId}/vote`, { type });
+    await api.post(`/perguntas/${questionId}/vote`, { type });
   },
 
   voteAnswer: async (answerId: number, type: 'upvote' | 'downvote'): Promise<void> => {
-    await api.post(`/answers/${answerId}/vote`, { type });
+    await api.post(`/respostas/${answerId}/vote`, { type });
   },
 
   removeVote: async (questionId?: number, answerId?: number): Promise<void> => {
     if (questionId) {
-      await api.delete(`/questions/${questionId}/vote`);
+      await api.delete(`/perguntas/${questionId}/vote`);
     } else if (answerId) {
-      await api.delete(`/answers/${answerId}/vote`);
+      await api.delete(`/respostas/${answerId}/vote`);
     }
   },
 };
@@ -173,12 +174,12 @@ export const voteService = {
 // Serviços de Comentários
 export const commentService = {
   getByQuestion: async (questionId: number): Promise<Comment[]> => {
-    const response = await api.get(`/questions/${questionId}/comments`);
+    const response = await api.get(`/perguntas/${questionId}/comments`);
     return response.data;
   },
 
   getByAnswer: async (answerId: number): Promise<Comment[]> => {
-    const response = await api.get(`/answers/${answerId}/comments`);
+    const response = await api.get(`/respostas/${answerId}/comments`);
     return response.data;
   },
 
