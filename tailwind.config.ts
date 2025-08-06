@@ -26,7 +26,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					hover: 'hsl(var(--primary-hover))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -52,6 +53,16 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				upvote: 'hsl(var(--upvote))',
+				downvote: 'hsl(var(--downvote))',
+				accepted: 'hsl(var(--accepted))',
+				'badge-gold': 'hsl(var(--badge-gold))',
+				'badge-silver': 'hsl(var(--badge-silver))',
+				'badge-bronze': 'hsl(var(--badge-bronze))',
+				'question-answered': 'hsl(var(--question-answered))',
+				'question-unanswered': 'hsl(var(--question-unanswered))',
+				'nav-background': 'hsl(var(--nav-background))',
+				'nav-hover': 'hsl(var(--nav-hover))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
