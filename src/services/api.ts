@@ -77,7 +77,7 @@ export const authService = {
   },
 
   register: async (username: string, email: string, password: string) => {
-    const response = await api.post('/register', { username, email, password });
+    const response = await api.post('/cadastrar', { nome: username, email, senha: password });
     return response.data;
   },
 
